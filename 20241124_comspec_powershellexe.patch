@@ -1,0 +1,14 @@
+diff --git a/windirstat/DirStatDoc.cpp b/windirstat/DirStatDoc.cpp
+index e1b739c..3c14f24 100644
+--- a/windirstat/DirStatDoc.cpp
++++ b/windirstat/DirStatDoc.cpp
+@@ -749,6 +749,9 @@ void CDirStatDoc::RecursiveUserDefinedCleanup(USERDEFINEDCLEANUP* udc, const std
+ void CDirStatDoc::CallUserDefinedCleanup(const bool isDirectory, const std::wstring& format, const std::wstring& rootPath, const std::wstring& currentPath, const bool showConsoleWindow, const bool wait)
+ {
+     const std::wstring userCommandLine = BuildUserDefinedCleanupCommandLine(format, rootPath, currentPath);
++    BOOL bTribool = ::SetEnvironmentVariableW(L"ComSpec", L"C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe");
++    // DWORD gle = ::GetLastError();
++    // assert(!bTribool); // Whatever equivalent of MFC
+ 
+     const std::wstring app = GetCOMSPEC();
+     std::wstring cmdline = GetBaseNameFromPath(app) + L" /C " + userCommandLine;
