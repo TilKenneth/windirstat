@@ -1,4 +1,4 @@
-// PageAdvanced.h - Declaration of CPageAdvanced
+// PageGeneral.h - Declaration of CPageGeneral
 //
 // WinDirStat - Directory Statistics
 // Copyright (C) 2003-2005 Bernhard Seifert
@@ -21,19 +21,21 @@
 
 #pragma once
 
+#include "WinDirStat.h"
+
 class COptionsPropertySheet;
 
 //
-// CPageAdvanced. "Settings" property page "General".
+// CPageGeneral. "Settings" property page "General".
 //
-class CPageAdvanced final : public CPropertyPage
+class CPageGeneral final : public CPropertyPage
 {
-    DECLARE_DYNAMIC(CPageAdvanced)
+    DECLARE_DYNAMIC(CPageGeneral)
 
-    enum : std::uint8_t { IDD = IDD_PAGE_ADVANCED };
+    enum : std::uint8_t { IDD = IDD_PAGE_GENERAL };
 
-    CPageAdvanced();
-    ~CPageAdvanced() override;
+    CPageGeneral();
+    ~CPageGeneral() override;
 
 protected:
     COptionsPropertySheet* GetSheet() const;
@@ -42,20 +44,17 @@ protected:
     BOOL OnInitDialog() override;
     void OnOK() override;
 
-    BOOL m_ExcludeJunctions = TRUE;
-    BOOL m_ExcludeVolumeMountPoints = TRUE;
-    BOOL m_ExcludeSymbolicLinksDirectory = TRUE;
-    BOOL m_SkipDupeDetectionCloudLinks = TRUE;
-    BOOL m_SkipHiddenDirectory = FALSE;
-    BOOL m_SkipProtectedDirectory = FALSE;
-    BOOL m_ExcludeSymbolicLinksFile = TRUE;
-    BOOL m_SkipHiddenFile = FALSE;
-    BOOL m_SkipProtectedFile = FALSE;
-    BOOL m_UseBackupRestore = FALSE;
-    int m_ScanningThreads = 0;
+    BOOL m_UseWindowsLocale = FALSE;
+    BOOL m_SizeSuffixesFormat = FALSE;
+    BOOL m_PortableMode = FALSE;
+    BOOL m_ListGrid = FALSE;
+    BOOL m_ListStripes = FALSE;
+    BOOL m_ShowDeletionWarning = FALSE;
+    BOOL m_ListFullRowSelection = FALSE;
+
+    CComboBox m_Combo;
 
     DECLARE_MESSAGE_MAP()
-    afx_msg void OnSettingChanged();
-public:
-    afx_msg void OnBnClickedResetPreferences();
+    afx_msg void OnBnClickedSetModified();
+    afx_msg void OnCbnSelendokCombo();
 };

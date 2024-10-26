@@ -1,4 +1,4 @@
-// PageGeneral.h - Declaration of CPageGeneral
+// PageFileTree.h - Declaration of CPageFileTree
 //
 // WinDirStat - Directory Statistics
 // Copyright (C) 2003-2005 Bernhard Seifert
@@ -21,38 +21,46 @@
 
 #pragma once
 
-class COptionsPropertySheet;
+#include "WinDirStat.h"
+#include "ColorButton.h"
 
 //
-// CPageGeneral. "Settings" property page "General".
+// CPageFileTree. "Settings" property page "Folder List".
 //
-class CPageGeneral final : public CPropertyPage
+class CPageFileTree final : public CPropertyPage
 {
-    DECLARE_DYNAMIC(CPageGeneral)
+    DECLARE_DYNAMIC(CPageFileTree)
 
-    enum : std::uint8_t { IDD = IDD_PAGE_GENERAL };
+    enum : std::uint8_t { IDD = IDD_PAGE_TREELIST };
 
-    CPageGeneral();
-    ~CPageGeneral() override;
+    CPageFileTree();
+    ~CPageFileTree() override = default;
 
 protected:
-    COptionsPropertySheet* GetSheet() const;
-
     void DoDataExchange(CDataExchange* pDX) override;
     BOOL OnInitDialog() override;
     void OnOK() override;
+    void EnableButtons();
 
-    BOOL m_UseWindowsLocale = FALSE;
-    BOOL m_SizeSuffixesFormat = FALSE;
-    BOOL m_PortableMode = FALSE;
-    BOOL m_ListGrid = FALSE;
-    BOOL m_ListStripes = FALSE;
-    BOOL m_ShowDeletionWarning = FALSE;
-    BOOL m_ListFullRowSelection = FALSE;
+    BOOL m_PacmanAnimation = FALSE;
+    BOOL m_ShowTimeSpent = FALSE;
+    BOOL m_ShowColumnFolders = FALSE;
+    BOOL m_ShowColumnItems = FALSE;
+    BOOL m_ShowColumnFiles = FALSE;
+    BOOL m_ShowColumnAttributes = FALSE;
+    BOOL m_ShowColumnLastChange = FALSE;
+    BOOL m_ShowColumnOwner = FALSE;
+    BOOL m_ShowColumnSizePhysical = FALSE;
+    BOOL m_ShowColumnSizeLogical = FALSE;
 
-    CComboBox m_Combo;
+    int m_FileTreeColorCount = TREELISTCOLORCOUNT;
+    COLORREF m_FileTreeColor[TREELISTCOLORCOUNT] = {};
+
+    CColorButton m_ColorButton[TREELISTCOLORCOUNT];
+    CSliderCtrl m_Slider;
 
     DECLARE_MESSAGE_MAP()
+    afx_msg void OnColorChanged(UINT id, NMHDR*, LRESULT*);
+    afx_msg void OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar);
     afx_msg void OnBnClickedSetModified();
-    afx_msg void OnCbnSelendokCombo();
 };
